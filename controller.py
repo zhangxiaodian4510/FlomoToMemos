@@ -21,18 +21,19 @@ def add():
 
         # 文件处理
         resourceIdList = []
-        if flomo['filePath'] != "None":
-            resourceIdList = []
-            for f in flomo['filePath']:
-                fileObject = upFile(f)
-                time.sleep(1.5)
-                resourceIdList.append(fileObject['id'])
+        # if flomo['filePath'] != "None":
+        #     resourceIdList = []
+        #     for f in flomo['filePath']:
+        #         fileObject = upFile(f)
+        #         time.sleep(1.5)
+        #         resourceIdList.append(fileObject['id'])
 
         # 内容处理
         if resourceIdList is not [] or flomo['content'] != "None":
-            ct = int(time.mktime(datetime.strptime(flomo['time'], "%Y-%m-%d %H:%M:%S").timetuple()))
+            ct = datetime.strptime(flomo["time"], "%Y-%m-%d %H:%M:%S")
+            rfc3339_string = ct.strftime("%Y-%m-%dT%H:%M:%SZ")
             msg = "\n".join(flomo['content'])
-            msgObject = upMemo(ct, msg, resourceIdList)
+            msgObject = upMemo(rfc3339_string, msg, resourceIdList)
             time.sleep(0.5)
             print(f'已完成 {flomo["time"]}')
 

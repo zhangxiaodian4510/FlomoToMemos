@@ -4,11 +4,11 @@ import time
 from memos.util import getType
 
 # 需要修改 Host 与 token.txt
-Host = 'https://memos.thatcoder.cn'  # 改成你的网址 结尾不要斜杠 例如: https://memos.thatcoder.cn
+Host = 'http://cherishyue.com:5230'  # 改成你的网址 结尾不要斜杠 例如: https://memos.thatcoder.cn
 ApiBase = f'{Host}/api/v1'
 ApiSignIn = ApiBase + '/auth/signin'
-ApiBlob = ApiBase + '/resource/blob'
-ApiMemo = ApiBase + '/memo'
+ApiBlob = ApiBase + '/resources'
+ApiMemo = ApiBase + '/memos'
 
 
 
@@ -48,16 +48,13 @@ def upFile(filePath):
 
 
 def upMemo(ct, msg, resourceIdList):
-    """
-    memos已不接受时间参数
-    """
     headers = Headers
     data = {
-        'createdTs': ct,
-        'updatedTs': ct,
+        'createTime': ct,
         'content': msg,
         'visibility': 'PRIVATE',
     }
+    print(data)
     if resourceIdList:
         data['resourceIdList'] = resourceIdList
     response = requests.post(ApiMemo, headers=headers, json=data)
